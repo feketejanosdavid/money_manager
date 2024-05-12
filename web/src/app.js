@@ -1,5 +1,6 @@
 const Doc = {
-    IncomeBody: document.getElementById('IncomeBody')
+    IncomeBody: document.getElementById('IncomeBody'),
+    ExpenseBody
 }
 
 const State = {
@@ -16,7 +17,8 @@ function getIncomes() {
 
 function getExpenses() {
     fetch(State.expensesURL).then(Response => Response.json()).then(result => {
-        console.log(result)
+        console.log(result);
+        renderExpenses(result)
     })
 }
 
@@ -33,9 +35,22 @@ function renderIncomes(incomeList) {
     });
 }
 
+function renderExpenses(expenseList) {
+    expenseList.forEach(data => {
+        var row = document.createElement('tr')
+        row.innerHTML = `
+        <td>${data.id}</td>
+        <td>${data.date}</td>
+        <td>${data.type}</td>
+        <td>${data.amount}</td>
+        `
+        Doc.ExpenseBody.appendChild(row)
+    })
+}
+
 function getDatas() {
     getIncomes();
-    getExpenses()
+    getExpenses();
 }
 
 
